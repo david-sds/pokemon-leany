@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -15,6 +16,8 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { PaginateOutput } from 'src/utils/pagination/pagination.utils';
+import { QueryPaginationDto } from 'src/utils/pagination/query-pagination.dto';
 import { TrainerDto } from './dto/trainer.dto';
 import { TrainerService } from './trainer.service';
 
@@ -29,8 +32,10 @@ export class TrainerController {
     status: 200,
     description: 'Lista de treinadores retornada com sucesso.',
   })
-  findAll(): Promise<TrainerDto[]> {
-    return this.trainerService.findAll();
+  findAll(
+    @Query() query: QueryPaginationDto,
+  ): Promise<PaginateOutput<TrainerDto>> {
+    return this.trainerService.findAll(query);
   }
 
   @Get(':id')

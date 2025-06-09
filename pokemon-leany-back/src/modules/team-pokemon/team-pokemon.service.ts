@@ -30,9 +30,7 @@ export class TeamPokemonService {
     }
 
     const pokemonsTime = await this.teamPokemonRepository.find({
-      where: {
-        time: time,
-      },
+      where: { time: time },
     });
 
     return pokemonsTime.map((e) => plainToInstance(PokemonDto, e));

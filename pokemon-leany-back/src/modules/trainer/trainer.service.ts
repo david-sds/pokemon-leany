@@ -1,7 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { plainToInstance } from 'class-transformer';
-import { Repository } from 'typeorm';
+import {
+  paginate,
+  PaginateOutput,
+  paginateOutput,
+} from 'src/utils/pagination/pagination.utils';
+import { QueryPaginationDto } from 'src/utils/pagination/query-pagination.dto';
+import { FindOptionsWhere, Like, Repository } from 'typeorm';
 import { TrainerDto } from './dto/trainer.dto';
 import { Trainer } from './trainer.entity';
 
@@ -12,10 +18,29 @@ export class TrainerService {
     private trainerRepository: Repository<Trainer>,
   ) {}
 
-  async findAll(): Promise<TrainerDto[]> {
-    const entities = await this.trainerRepository.find();
+  async findAll(
+    query: QueryPaginationDto,
+  ): Promise<PaginateOutput<TrainerDto>> {
+    const where: FindOptionsWhere<Trainer>[] = [];
 
-    return entities.map((e) => plainToInstance(TrainerDto, e));
+    if (query.search) {
+      where.push({ nome: Like('%' + query.search + '%') });
+      where.push({ cidadeDeOrigem: Like('%' + query.search + '%') });
+    }
+
+    const [entities, count] = await Promise.all([
+      this.trainerRepository.find({
+        ...paginate(query),
+        where,
+      }),
+      this.trainerRepository.count({ where }),
+    ]);
+
+    return paginateOutput<TrainerDto>(
+      entities.map((e) => plainToInstance(TrainerDto, e)),
+      count,
+      query,
+    );
   }
 
   async findById(id: number): Promise<TrainerDto> {
