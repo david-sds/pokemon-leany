@@ -21,13 +21,6 @@ cd pokemon-leany/pokemon-leany-back
 docker-compose up -d
 ```
 
-▶️ Rodando a API (modo dev)
-
-```
-npm install
-npm run start:dev
-```
-
 ## ⚙️ Variáveis de Ambiente
 Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
 
@@ -39,4 +32,11 @@ DB_PORT=3306
 DB_USERNAME=root
 DB_PASSWORD=root
 DB_DATABASE=pokemon_leany_db
+```
+
+▶️ Rodando a API (modo dev)
+
+```
+npm install
+npm run start:dev
 ```
