@@ -18,6 +18,14 @@ export class TrainerDto {
   id?: number;
 
   @ApiProperty({
+    description: 'Username do treinador',
+    example: 1,
+  })
+  @IsNotEmpty()
+  @IsString()
+  username: string;
+
+  @ApiProperty({
     description: 'Nome do treinador',
     example: 'Ash Ketchum',
   })

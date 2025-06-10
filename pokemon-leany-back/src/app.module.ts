@@ -2,10 +2,13 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { ConfigModule } from '@nestjs/config';
-import { TrainerModule } from './modules/trainer/trainer.module';
-import { TeamModule } from './modules/team/team.module';
-import { TeamPokemonModule } from './modules/team-pokemon/team-pokemon.module';
+import { APP_GUARD } from '@nestjs/core';
 import { PokeApiModule } from './api/poke-api/poke-api.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { TeamPokemonModule } from './modules/team-pokemon/team-pokemon.module';
+import { TeamModule } from './modules/team/team.module';
+import { TrainerModule } from './modules/trainer/trainer.module';
+import { AuthGuard } from './utils/guards/auth.guard';
 
 @Module({
   imports: [
@@ -26,8 +29,14 @@ import { PokeApiModule } from './api/poke-api/poke-api.module';
     TeamModule,
     TeamPokemonModule,
     PokeApiModule,
+    AuthModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AppModule {}

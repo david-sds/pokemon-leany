@@ -1,10 +1,24 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
 import { Team } from '../team/team.entity';
 
 @Entity()
+@Unique(['username'])
+@Unique(['password'])
 export class Trainer {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column()
+  username: string;
+
+  @Column()
+  password: string;
 
   @Column()
   nome: string;
