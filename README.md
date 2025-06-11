@@ -1,6 +1,6 @@
 # Pokémon Leany Back
 
-Backend do projeto Pokémon Leany, uma API em NestJS com MySQL, usando Docker para o banco de dados e npm para gerenciamento de dependências.
+Backend do projeto Pokémon Leany, uma API em NestJS com TypeORM e MySQL, usando Docker para containerizar o banco de dados e npm para gerenciamento de dependências.
 
 ## 🔧 Requisitos
 
