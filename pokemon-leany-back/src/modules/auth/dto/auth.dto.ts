@@ -21,7 +21,7 @@ export class AuthDto {
   username: string;
 
   @ApiProperty({
-    description: 'Password do password',
+    description: 'Password do treinador',
     example: 1,
   })
   @IsString()

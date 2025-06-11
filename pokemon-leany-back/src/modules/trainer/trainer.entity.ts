@@ -9,7 +9,6 @@ import { Team } from '../team/team.entity';
 
 @Entity()
 @Unique(['username'])
-@Unique(['password'])
 export class Trainer {
   @PrimaryGeneratedColumn()
   id: number;

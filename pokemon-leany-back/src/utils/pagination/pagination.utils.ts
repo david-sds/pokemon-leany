@@ -1,7 +1,7 @@
 import { QueryPaginationDto } from './query-pagination.dto';
 
 const DEFAULT_PAGE_NUMBER = 1;
-const DEFAULT_PAGE_SIZE = 10;
+const DEFAULT_PAGE_SIZE = 4;
 
 export interface PaginateOutput<T> {
   data: T[];

@@ -16,8 +16,10 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { Public } from 'src/utils/decorators/public.decorators';
 import { PaginateOutput } from 'src/utils/pagination/pagination.utils';
 import { QueryPaginationDto } from 'src/utils/pagination/query-pagination.dto';
+import { CreateTrainerDto } from './dto/create-trainer.dto';
 import { TrainerDto } from './dto/trainer.dto';
 import { TrainerService } from './trainer.service';
 
@@ -47,11 +49,12 @@ export class TrainerController {
     return this.trainerService.findById(id);
   }
 
+  @Public()
   @Post()
   @ApiOperation({ summary: 'Cria um novo treinador' })
-  @ApiBody({ type: TrainerDto })
+  @ApiBody({ type: CreateTrainerDto })
   @ApiResponse({ status: 201, description: 'Treinador criado com sucesso.' })
-  create(@Body() payload: TrainerDto) {
+  create(@Body() payload: CreateTrainerDto) {
     return this.trainerService.create(payload);
   }
 

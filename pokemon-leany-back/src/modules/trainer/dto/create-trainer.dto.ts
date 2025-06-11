@@ -1,5 +1,4 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Exclude } from 'class-transformer';
 import {
   IsNotEmpty,
   IsNumber,
@@ -8,7 +7,7 @@ import {
   Min,
 } from 'class-validator';
 
-export class TrainerDto {
+export class CreateTrainerDto {
   @ApiProperty({
     description: 'ID do treinador',
     example: 1,
@@ -26,7 +25,12 @@ export class TrainerDto {
   @IsString()
   username: string;
 
-  @Exclude()
+  @ApiProperty({
+    description: 'Senha do treinador',
+    example: 1,
+  })
+  @IsNotEmpty()
+  @IsString()
   password: string;
 
   @ApiProperty({

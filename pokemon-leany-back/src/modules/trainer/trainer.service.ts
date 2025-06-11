@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { plainToInstance } from 'class-transformer';
 import {
@@ -8,6 +12,7 @@ import {
 } from 'src/utils/pagination/pagination.utils';
 import { QueryPaginationDto } from 'src/utils/pagination/query-pagination.dto';
 import { FindOptionsWhere, Like, Repository } from 'typeorm';
+import { CreateTrainerDto } from './dto/create-trainer.dto';
 import { TrainerDto } from './dto/trainer.dto';
 import { Trainer } from './trainer.entity';
 
@@ -53,13 +58,21 @@ export class TrainerService {
     return plainToInstance(TrainerDto, response);
   }
 
-  async create(payload: TrainerDto) {
+  async create(payload: CreateTrainerDto) {
     const entity = this.trainerRepository.create({
       nome: payload.nome,
       cidadeDeOrigem: payload.cidadeDeOrigem,
+      password: payload.password,
+      username: payload.username,
     });
 
-    return await this.trainerRepository.save(entity);
+    try {
+      const response = await this.trainerRepository.save(entity);
+
+      return plainToInstance(TrainerDto, response);
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
   }
 
   async update(id: number, payload: Partial<TrainerDto>) {
